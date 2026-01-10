@@ -1,0 +1,8 @@
+style:
+  ReturnCount:
+    max: 4
+    excludeGuardClauses: true
+
+naming:
+  NoNameShadowing:
+    active: false

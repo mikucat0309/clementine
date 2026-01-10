@@ -1,0 +1,14 @@
+naming:
+  FunctionNaming:
+    ignoreAnnotated: [ 'Composable' ]
+  NoNameShadowing:
+    active: false
+
+style:
+  MagicNumber:
+    ignorePropertyDeclaration: true
+  ReturnCount:
+    max: 4
+    excludeGuardClauses: true
+  UnusedPrivateFunction:
+    ignoreAnnotated: [ 'Preview' ]
