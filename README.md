@@ -4,8 +4,12 @@ Minimal one-time Beanfun login app, written in Kotlin.
 
 ## Screenshots
 
-<img src="./images/gama_login.png" width="40%" />
-<img src="./images/beanfun_login.png" width="40%" />
+<div>
+
+<img src="./images/gama_login.png" width="30%" />
+<img src="./images/beanfun_login.png" width="30%" />
+
+</div>
 
 ## Highlights
 
