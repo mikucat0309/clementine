@@ -55,8 +55,10 @@ class GamaLoginViewModel(
             _exception.tryEmit(IllegalArgumentException("Invalid deep link"))
         } else {
             viewModelScope.launch {
+                _isFetching.value = true
                 api.login(state, code)
                     .onFailure { _exception.tryEmit(it) }
+                _isFetching.value = false
             }
         }
     }
