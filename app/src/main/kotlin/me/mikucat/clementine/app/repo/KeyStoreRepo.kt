@@ -60,7 +60,7 @@ class KeyStoreRepo(
         val key = getOrGenKey()
         val params = appData.params.first()
         checkNotNull(params)
-        val spec = GCMParameterSpec(128, params.iv)
+        val spec = GCMParameterSpec(TAG_BIT_LENGTH, params.iv)
         cipher.init(Cipher.DECRYPT_MODE, key, spec)
         cipher.updateAAD(params.aad)
         return cipher.doFinal(data)!!
@@ -68,6 +68,7 @@ class KeyStoreRepo(
 
     companion object {
         private const val AAD_LENGTH = 16
+        private const val TAG_BIT_LENGTH = 16 * 8
         private const val KEY_ALGORITHM = "AES"
         private const val KEY_TRANSFORMATION = "AES/GCM/NoPadding"
         private const val KEYSTORE_PROVIDER = "AndroidKeyStore"
