@@ -13,11 +13,11 @@ import me.mikucat.clementine.app.repo.PlayAPIRepo
 class BeanfunLoginViewModel(
     private val api: PlayAPIRepo,
 ) : ViewModel() {
-    private val _error = MutableSharedFlow<Exception>(
+    private val _error = MutableSharedFlow<Throwable>(
         replay = 0,
         extraBufferCapacity = 1,
     )
-    val exception = _error.asSharedFlow()
+    val error = _error.asSharedFlow()
     private val _success = MutableSharedFlow<String>(
         replay = 0,
         extraBufferCapacity = 1,
@@ -38,7 +38,7 @@ class BeanfunLoginViewModel(
                     _accounts.value = it
                 }
                 .onFailure {
-                    it.printStackTrace()
+                    _error.tryEmit(it)
                 }
             _isFetching.tryEmit(false)
         }
@@ -52,7 +52,7 @@ class BeanfunLoginViewModel(
                     _success.tryEmit(account.nick)
                 }
                 .onFailure {
-                    it.printStackTrace()
+                    _error.tryEmit(it)
                 }
             _isLogin.tryEmit(false)
         }

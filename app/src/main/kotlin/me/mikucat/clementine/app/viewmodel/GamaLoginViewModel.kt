@@ -19,11 +19,11 @@ class GamaLoginViewModel(
     private val api: AuthAPIRepo,
     appData: UserDataRepo,
 ) : ViewModel() {
-    private val _exception = MutableSharedFlow<Throwable>(
+    private val _error = MutableSharedFlow<Throwable>(
         replay = 0,
         extraBufferCapacity = 1,
     )
-    val exception = _exception.asSharedFlow()
+    val error = _error.asSharedFlow()
 
     private val _isFetching = MutableStateFlow(false)
     val isFetching = _isFetching.asStateFlow()
@@ -46,18 +46,18 @@ class GamaLoginViewModel(
         viewModelScope.launch {
             api.genLoginUrl()
                 .onSuccess { _loginURL.emit(it) }
-                .onFailure { _exception.tryEmit(it) }
+                .onFailure { _error.tryEmit(it) }
         }
     }
 
     fun login(state: String?, code: String?) {
         if (state == null || code == null) {
-            _exception.tryEmit(IllegalArgumentException("Invalid deep link"))
+            _error.tryEmit(IllegalArgumentException("Invalid deep link"))
         } else {
             viewModelScope.launch {
                 _isFetching.value = true
                 api.login(state, code)
-                    .onFailure { _exception.tryEmit(it) }
+                    .onFailure { _error.tryEmit(it) }
                 _isFetching.value = false
             }
         }

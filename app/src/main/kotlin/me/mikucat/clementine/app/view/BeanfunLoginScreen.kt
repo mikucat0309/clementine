@@ -62,18 +62,18 @@ fun BeanfunLoginScreen(
         )
     }
 
-    val exception = remember { mutableStateOf<Throwable?>(null) }
-    LaunchedEffect(vm.exception) {
-        vm.exception.collect {
-            exception.value = it
+    val error = remember { mutableStateOf<Throwable?>(null) }
+    LaunchedEffect(vm.error) {
+        vm.error.collect {
+            error.value = it
         }
     }
-    exception.value?.let {
+    error.value?.let {
         MessageDialog(
             title = it::class.simpleName ?: "Exception",
-            text = it.message ?: "Unknown error.",
+            text = it.message ?: "Unknown error",
             onDismiss = {
-                exception.value = null
+                error.value = null
                 backStack.removeLastOrNull()
             },
         )
