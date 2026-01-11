@@ -16,7 +16,8 @@ Minimal one-time Beanfun login app, written in Kotlin.
 - 💪 Support login via link or QRCodes (NOT recommended[^1]).
 - ✅ Simple: Just for login.
 - 🚫 Privacy: No Google or other trackings.
-- 💖 Open Source: Talk is cheap, show me the code
+- 🔐 Security: Encrypt credentials using Hardware-backed encryption.
+- 💖 Open Source: Talk is cheap, show me the code.
 
 ## Installation
 
