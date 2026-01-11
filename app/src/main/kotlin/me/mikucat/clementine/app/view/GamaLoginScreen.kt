@@ -112,7 +112,7 @@ private fun Screen(
 @Preview
 @Composable
 private fun PreviewScreen() {
-    Theme(false) {
+    Theme(true) {
         Screen(false) {}
     }
 }
