@@ -11,9 +11,13 @@ import kotlinx.serialization.json.Json
 import me.mikucat.clementine.PlayAPI
 import me.mikucat.clementine.app.model.AppData
 import me.mikucat.clementine.app.model.AppDataSerializer
+import me.mikucat.clementine.app.model.UserData
+import me.mikucat.clementine.app.model.UserDataSerializer
 import me.mikucat.clementine.app.repo.AppDataRepo
 import me.mikucat.clementine.app.repo.AuthAPIRepo
+import me.mikucat.clementine.app.repo.KeyStoreRepo
 import me.mikucat.clementine.app.repo.PlayAPIRepo
+import me.mikucat.clementine.app.repo.UserDataRepo
 import me.mikucat.clementine.app.viewmodel.BeanfunLoginViewModel
 import me.mikucat.clementine.app.viewmodel.GamaLoginViewModel
 import me.mikucat.clementine.app.viewmodel.ScanViewModel
@@ -25,6 +29,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 private val userDataName = named("UserData")
+private val appDataName = named("AppData")
 val ioDispatcher = named("Dispatchers.IO")
 
 val commonModule = module {
@@ -34,11 +39,14 @@ val commonModule = module {
             ignoreUnknownKeys = true
         }
     }
-    single(userDataName) { androidContext().appDataStore }
+    single(userDataName) { androidContext().userDataStore }
+    single(appDataName) { androidContext().appDataStore }
     single { PlayAPI(LogLevel.INFO) }
-    single { AppDataRepo(get(userDataName)) }
+    single { UserDataRepo(get(userDataName)) }
+    single { AppDataRepo(get(appDataName)) }
     singleOf(::AuthAPIRepo)
     singleOf(::PlayAPIRepo)
+    singleOf(::KeyStoreRepo)
     viewModelOf(::SplashViewModel)
     viewModelOf(::GamaLoginViewModel)
     viewModelOf(::ScanViewModel)
@@ -46,6 +54,11 @@ val commonModule = module {
 }
 
 private val Context.appDataStore: DataStore<AppData> by dataStore(
-    fileName = "data.json",
+    fileName = "app.json",
     serializer = AppDataSerializer,
+)
+
+private val Context.userDataStore: DataStore<UserData> by dataStore(
+    fileName = "user.json",
+    serializer = UserDataSerializer,
 )

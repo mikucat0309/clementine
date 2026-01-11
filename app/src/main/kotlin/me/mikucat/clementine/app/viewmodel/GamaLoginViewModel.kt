@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.mikucat.clementine.app.repo.AppDataRepo
 import me.mikucat.clementine.app.repo.AuthAPIRepo
+import me.mikucat.clementine.app.repo.UserDataRepo
 
 class GamaLoginViewModel(
     private val api: AuthAPIRepo,
-    appData: AppDataRepo,
+    appData: UserDataRepo,
 ) : ViewModel() {
     private val _exception = MutableSharedFlow<Throwable>(
         replay = 0,

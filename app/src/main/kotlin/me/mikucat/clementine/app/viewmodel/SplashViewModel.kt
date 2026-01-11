@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import me.mikucat.clementine.app.repo.AppDataRepo
+import me.mikucat.clementine.app.repo.UserDataRepo
 
 class SplashViewModel(
-    appData: AppDataRepo,
+    appData: UserDataRepo,
 ) : ViewModel() {
     val isLoggedIn: StateFlow<Boolean?> = appData.account
         .map { it != null }

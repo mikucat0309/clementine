@@ -7,7 +7,7 @@ import java.net.NetworkInterface
 
 class PlayAPIRepo(
     private val api: PlayAPI,
-    private val appData: AppDataRepo,
+    private val userData: UserDataRepo,
 ) {
     private val ip = NetworkInterface.getNetworkInterfaces().asSequence()
         .filter { it.isUp }
@@ -23,13 +23,15 @@ class PlayAPIRepo(
 
     suspend fun getBeanfunAccounts(): Result<List<BeanfunAccount>> {
         val user =
-            appData.account.first() ?: return Result.failure(IllegalStateException("not logged in"))
+            userData.account.first()
+                ?: return Result.failure(IllegalStateException("not logged in"))
         return api.getBeanfunAccounts(user, ip)
     }
 
     suspend fun beanfunLogin(beanfunAcct: BeanfunAccount, token: String): Result<Unit> {
         val gamaAcct =
-            appData.account.first() ?: return Result.failure(IllegalStateException("not logged in"))
+            userData.account.first()
+                ?: return Result.failure(IllegalStateException("not logged in"))
         return api.beanfunLogin(gamaAcct, beanfunAcct, token)
     }
 }
