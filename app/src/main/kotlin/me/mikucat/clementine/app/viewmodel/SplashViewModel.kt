@@ -2,20 +2,20 @@ package me.mikucat.clementine.app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import me.mikucat.clementine.app.repo.UserDataRepo
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import me.mikucat.clementine.app.repo.PlayAPIRepo
 
 class SplashViewModel(
-    appData: UserDataRepo,
+    api: PlayAPIRepo,
 ) : ViewModel() {
-    val isLoggedIn: StateFlow<Boolean?> = appData.account
-        .map { it != null }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            initialValue = null,
-        )
+    private val _isLoggedIn = MutableStateFlow<Boolean?>(null)
+    val isLoggedIn = _isLoggedIn.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            _isLoggedIn.value = api.getBeanfunAccounts().isSuccess
+        }
+    }
 }
