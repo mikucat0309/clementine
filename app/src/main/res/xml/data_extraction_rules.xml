@@ -3,11 +3,11 @@
     <cloud-backup>
         <exclude
             domain="file"
-            path="datastore/data.json" />
+            path="datastore/user.json" />
     </cloud-backup>
     <device-transfer>
         <exclude
             domain="file"
-            path="datastore/data.json" />
+            path="datastore/user.json" />
     </device-transfer>
 </data-extraction-rules>

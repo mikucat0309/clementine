@@ -2,5 +2,5 @@
 <full-backup-content>
     <exclude
         domain="file"
-        path="datastore/data.json" />
+        path="datastore/user.json" />
 </full-backup-content>
