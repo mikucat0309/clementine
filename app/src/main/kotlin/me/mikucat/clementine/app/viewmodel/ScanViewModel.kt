@@ -1,7 +1,6 @@
 package me.mikucat.clementine.app.viewmodel
 
 import android.content.Context
-import android.graphics.Rect
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -21,14 +20,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.mikucat.clementine.app.data.provider.QRCodeAnalyzer
 import me.mikucat.clementine.app.ioDispatcher
-import me.mikucat.clementine.parseBeanfunLoginLink
-import me.mikucat.clementine.toURL
-import me.mikucat.clementine.unwrapAppLink
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import zxingcpp.BarcodeReader
-import kotlin.math.min
 
 class ScanViewModel : ViewModel(), ImageAnalysis.Analyzer, KoinComponent {
     private val dispatcher: CoroutineDispatcher by inject(ioDispatcher)
@@ -43,15 +38,6 @@ class ScanViewModel : ViewModel(), ImageAnalysis.Analyzer, KoinComponent {
 
     val loginToken = _loginToken.asSharedFlow()
 
-    private val barcodeReader = BarcodeReader(
-        BarcodeReader.Options(
-            formats = setOf(BarcodeReader.Format.QR_CODE),
-            tryHarder = true,
-            tryRotate = true,
-            tryInvert = true,
-            tryDownscale = true,
-        ),
-    )
 
     fun bindToCamera(context: Context, lifecycleOwner: LifecycleOwner) {
         viewModelScope.launch {
@@ -82,16 +68,7 @@ class ScanViewModel : ViewModel(), ImageAnalysis.Analyzer, KoinComponent {
     }
 
     override fun analyze(image: ImageProxy) {
-        val size = min(image.height, image.width)
-        image.setCropRect(Rect(0, 0, size, size))
-        barcodeReader.read(image)
-            .mapNotNull { it.text }
-            .mapNotNull { it.toURL() }
-            .mapNotNull { it.unwrapAppLink() }
-            .firstNotNullOfOrNull { it.parseBeanfunLoginLink() }
-            ?.let {
-                _loginToken.tryEmit(it)
-            }
+        QRCodeAnalyzer.decode(image)?.let { _loginToken.tryEmit(it) }
         image.close()
     }
 }
