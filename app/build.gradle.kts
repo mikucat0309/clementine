@@ -1,27 +1,24 @@
+import com.android.build.api.dsl.ApplicationExtension
 import dev.detekt.gradle.Detekt
 import dev.detekt.gradle.DetektCreateBaselineTask
 
 plugins {
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.detekt)
 }
 
-val jvmVersion = libs.versions.jvm.get().toInt()
-val androidSDKTarget = libs.versions.androidSDKTarget.get().toInt()
-val androidSDKMinimum = libs.versions.androidSDKMinimum.get().toInt()
+val targetJVM = libs.versions.targetJVM.get().toInt()
+val targetSDK = libs.versions.targetSDK.get().toInt()
+val minSDK = libs.versions.minSDK.get().toInt()
 
-android {
+extensions.getByType(ApplicationExtension::class).apply {
     namespace = "me.mikucat.clementine.app"
-    compileSdk {
-        version = release(androidSDKTarget)
-    }
+    compileSdk = targetSDK
     defaultConfig {
         applicationId = "me.mikucat.clementine.app"
-        minSdk = androidSDKMinimum
-        targetSdk = androidSDKTarget
+        minSdk = minSDK
         versionCode = 2
         versionName = "0.2.0"
     }
@@ -44,8 +41,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(jvmVersion)
-        targetCompatibility = JavaVersion.toVersion(jvmVersion)
+        sourceCompatibility = JavaVersion.toVersion(targetJVM)
+        targetCompatibility = JavaVersion.toVersion(targetJVM)
     }
     buildFeatures {
         compose = true
@@ -60,11 +57,11 @@ detekt {
 }
 
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = jvmVersion.toString()
+    jvmTarget = targetJVM.toString()
 }
 
 tasks.withType<DetektCreateBaselineTask>().configureEach {
-    jvmTarget = jvmVersion.toString()
+    jvmTarget = targetJVM.toString()
 }
 
 dependencies {

@@ -1,12 +1,12 @@
 [versions]
 #noinspection UnusedVersionCatalogEntry
-jvm = "21"
+targetJVM = "21"
 #noinspection UnusedVersionCatalogEntry
-androidSDKMinimum = "33"
+minSDK = "33"
 #noinspection UnusedVersionCatalogEntry
-androidSDKTarget = "36"
+targetSDK = "36"
 
-agp = "8.13.2"
+androidGradlePlugin = "9.0.0"
 material = "1.13.0"
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
@@ -78,8 +78,6 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 compose-rules-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "composeRules" }
 
-
-
 [bundles]
 compose = ["androidx-compose-ui", "androidx-compose-ui-graphics", "androidx-compose-material3"]
 nav3 = ["androidx-navigation3-runtime", "androidx-navigation3-ui", "androidx-lifecycle-viewmodel-navigation3"]
@@ -88,8 +86,7 @@ koin = ["koin-core", "koin-android", "koin-androidx-compose", "koin-compose", "k
 camerax = ["androidx-camera-core", "androidx-camera-camera2", "androidx-camera-lifecycle", "androidx-camera-compose"]
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
