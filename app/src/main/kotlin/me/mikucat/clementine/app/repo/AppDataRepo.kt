@@ -9,10 +9,17 @@ import me.mikucat.clementine.app.model.GCMParams
 class AppDataRepo(
     private val dataStore: DataStore<AppData>,
 ) {
-    val params: Flow<GCMParams?> = dataStore.data
-        .map { it.params }
+    val gcmParams: Flow<GCMParams?> = dataStore.data
+        .map { it.gcmParams }
 
-    suspend fun update(params: GCMParams) {
-        dataStore.updateData { it.copy(params = params) }
+    val onboarding: Flow<Boolean?> = dataStore.data
+        .map { it.onboarding }
+
+    suspend fun updateGCMParams(gcmParams: GCMParams) {
+        dataStore.updateData { it.copy(gcmParams = gcmParams) }
+    }
+
+    suspend fun updateOnboarding(onboarding: Boolean) {
+        dataStore.updateData { it.copy(onboarding = onboarding) }
     }
 }

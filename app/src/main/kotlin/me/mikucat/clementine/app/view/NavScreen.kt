@@ -8,6 +8,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import me.mikucat.clementine.app.route.BeanfunLogin
 import me.mikucat.clementine.app.route.Login
+import me.mikucat.clementine.app.route.Onboarding
 import me.mikucat.clementine.app.route.Scan
 import me.mikucat.clementine.parseBeanfunLoginLink
 import me.mikucat.clementine.parseGamaLoginLink
@@ -15,14 +16,17 @@ import me.mikucat.clementine.toURL
 import me.mikucat.clementine.unwrapAppLink
 
 @Composable
-fun NavScreen(intent: Intent, isLoggedIn: Boolean) {
-    val key = handleDeepLink(intent, isLoggedIn)
+fun NavScreen(intent: Intent, onboarding: Boolean, isLoggedIn: Boolean) {
+    val key = if (onboarding) Onboarding else handleDeepLink(intent, isLoggedIn)
     val backStack = rememberNavBackStack(key)
 
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
+            entry<Onboarding> {
+                OnboardingScreen(backStack)
+            }
             entry<Scan> {
                 ScanScreen(backStack)
             }

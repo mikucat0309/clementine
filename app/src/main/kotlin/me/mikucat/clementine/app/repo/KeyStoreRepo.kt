@@ -51,14 +51,14 @@ class KeyStoreRepo(
         val aad = SecureRandom().generateSeed(AAD_LENGTH)
         cipher.updateAAD(aad)
         val params = GCMParams(iv, aad)
-        appData.update(params)
+        appData.updateGCMParams(params)
         return cipher.doFinal(data)!!
     }
 
     suspend fun decrypt(data: ByteArray): ByteArray {
         val cipher = Cipher.getInstance(KEY_TRANSFORMATION)
         val key = getOrGenKey()
-        val params = appData.params.first()
+        val params = appData.gcmParams.first()
         checkNotNull(params)
         val spec = GCMParameterSpec(TAG_BIT_LENGTH, params.iv)
         cipher.init(Cipher.DECRYPT_MODE, key, spec)

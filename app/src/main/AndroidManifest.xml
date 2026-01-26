@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <queries>
+        <package android:name="com.gamania.beanfun" />
+    </queries>
+
     <application
         android:name=".MainApplication"
         android:dataExtractionRules="@xml/data_extraction_rules"

@@ -14,7 +14,7 @@ import java.io.OutputStream
 object AppDataSerializer : Serializer<AppData>, KoinComponent {
     private val dispatcher: CoroutineDispatcher by inject(ioDispatcher)
     private val json: Json by inject()
-    override val defaultValue: AppData = AppData(null)
+    override val defaultValue: AppData = AppData(null, null)
 
     override suspend fun readFrom(input: InputStream): AppData {
         return withContext(dispatcher) {

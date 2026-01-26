@@ -20,6 +20,7 @@ import me.mikucat.clementine.app.repo.PlayAPIRepo
 import me.mikucat.clementine.app.repo.UserDataRepo
 import me.mikucat.clementine.app.viewmodel.BeanfunLoginViewModel
 import me.mikucat.clementine.app.viewmodel.GamaLoginViewModel
+import me.mikucat.clementine.app.viewmodel.OnboardingViewModel
 import me.mikucat.clementine.app.viewmodel.ScanViewModel
 import me.mikucat.clementine.app.viewmodel.SplashViewModel
 import org.koin.android.ext.koin.androidContext
@@ -41,13 +42,14 @@ val commonModule = module {
     }
     single(userDataName) { androidContext().userDataStore }
     single(appDataName) { androidContext().appDataStore }
-    single { PlayAPI(LogLevel.INFO) }
+    single { PlayAPI(LogLevel.ALL) }
     single { UserDataRepo(get(userDataName)) }
     single { AppDataRepo(get(appDataName)) }
     singleOf(::AuthAPIRepo)
     singleOf(::PlayAPIRepo)
     singleOf(::KeyStoreRepo)
     viewModelOf(::SplashViewModel)
+    viewModelOf(::OnboardingViewModel)
     viewModelOf(::GamaLoginViewModel)
     viewModelOf(::ScanViewModel)
     viewModelOf(::BeanfunLoginViewModel)

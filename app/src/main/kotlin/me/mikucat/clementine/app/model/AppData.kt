@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppData(
-    val params: GCMParams?,
+    val gcmParams: GCMParams?,
+    val onboarding: Boolean?,
 )
