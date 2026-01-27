@@ -1,6 +1,6 @@
 # Clementine
 
-Minimal one-time Beanfun login app, written in Kotlin.
+Minimal Beanfun login authenticator, written in Kotlin.
 
 ## Screenshots
 
@@ -13,7 +13,7 @@ Minimal one-time Beanfun login app, written in Kotlin.
 
 ## Highlights
 
-- 💪 Support login via link or QRCodes (NOT recommended[^1]).
+- 💪 Support login via link or QR Codes.
 - ✅ Simple: Just for login.
 - 🚫 Privacy: No Google or other trackings.
 - 🔐 Security: Encrypt credentials using Hardware-backed encryption.
@@ -21,14 +21,14 @@ Minimal one-time Beanfun login app, written in Kotlin.
 
 ## Installation
 
-Support Android 13+[^2]
+Support Android 13+[^1]
 
 Download APK from [GitHub releases](https://github.com/mikucat0309/clementine/releases)
 
 ## Roadmap
 
 - Localization
-- Improve QRCode scanner performance[^1], or remove this function
+- Daily Clock-In
 
 ## Non-Goals
 
@@ -42,6 +42,4 @@ Download APK from [GitHub releases](https://github.com/mikucat0309/clementine/re
   on [Fluent Emoji](https://github.com/microsoft/fluentui-emoji), licensed under MIT License
 - Others are licensed under [AGPLv3 License](LICENSE.txt)
 
-[^1]: App built-in QRCode scanner performs poorly, we recommend using other QRCode scanner and login
-via links.
-[^2]: Lowest Android version that receiving security updates.
+[^1]: Lowest Android version that receiving security updates.
