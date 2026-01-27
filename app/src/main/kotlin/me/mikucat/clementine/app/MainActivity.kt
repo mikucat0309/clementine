@@ -1,7 +1,6 @@
 package me.mikucat.clementine.app
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
@@ -29,7 +28,6 @@ class MainActivity : ComponentActivity(), ViewTreeObserver.OnPreDrawListener, Ko
             Theme {
                 val state by vm.state.collectAsStateWithLifecycle()
                 state?.let {
-                    Log.w("main", "state: $state")
                     NavScreen(intent, it.onboarding, it.isLoggedIn)
                 }
             }
