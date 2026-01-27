@@ -21,13 +21,20 @@ jobs:
         uses: gradle/actions/setup-gradle@v5.0.0
 
       - name: Setup keystore
-        working-directory: app
-        run: |
-          install ~/.android/debug.keystore release.keystore
+        run: >
+          keytool -genkey
+          -keystore /tmp/release.keystore
+          -alias AndroidDebugKey
+          -storepass android
+          -keypass android
+          -keyalg RSA
+          -keysize 2048
+          -validity 1
+          -dname "CN=Android Debug,O=Android,C=US"
 
       - name: Build APK
         env:
-          KEYSTORE_FILE: release.keystore
+          KEYSTORE_FILE: /tmp/release.keystore
           KEYSTORE_PASSWORD: android
           KEY_ALIAS: AndroidDebugKey
           KEY_PASSWORD: android
