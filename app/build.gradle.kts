@@ -19,8 +19,8 @@ extensions.getByType(ApplicationExtension::class).apply {
     defaultConfig {
         applicationId = "me.mikucat.clementine.app"
         minSdk = minSDK
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
     }
     signingConfigs {
         create("release") {
