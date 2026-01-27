@@ -21,6 +21,7 @@ extensions.getByType(ApplicationExtension::class).apply {
         minSdk = minSDK
         versionCode = 4
         versionName = "0.3.1"
+        base.archivesName = "clementine-${versionName}"
     }
     signingConfigs {
         create("release") {

@@ -1,4 +1,4 @@
-name: Build APK
+name: Release
 
 on:
   push:
@@ -21,8 +21,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
-        with:
-          cache-read-only: false
 
       - name: Setup keystore
         working-directory: app
@@ -39,7 +37,8 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew :app:assembleRelease
 
-      - name: Release
+      - name: Upload APK
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/release/app-release.apk
+          files: |
+            app/build/outputs/apk/release/*.apk
