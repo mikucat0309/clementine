@@ -20,7 +20,12 @@ object AppDataSerializer : Serializer<AppData>, KoinComponent {
         return withContext(dispatcher) {
             val bs = input.readBytes()
             val s = bs.decodeToString()
-            json.decodeFromString(AppData.serializer(), s)
+            runCatching {
+                json.decodeFromString(
+                    AppData.serializer(),
+                    s,
+                )
+            }.getOrDefault(defaultValue)
         }
     }
 
