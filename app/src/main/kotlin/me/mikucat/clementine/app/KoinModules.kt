@@ -42,7 +42,7 @@ val commonModule = module {
     }
     single(userDataName) { androidContext().userDataStore }
     single(appDataName) { androidContext().appDataStore }
-    single { PlayAPI(LogLevel.ALL) }
+    single { PlayAPI(LogLevel.INFO) }
     single { UserDataRepo(get(userDataName)) }
     single { AppDataRepo(get(appDataName)) }
     singleOf(::AuthAPIRepo)
