@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.mikucat.clementine.app.repo.AppDataRepo
 import me.mikucat.clementine.app.repo.PlayAPIRepo
@@ -25,7 +25,7 @@ class SplashViewModel(
     init {
         viewModelScope.launch {
             val j1 = async {
-                appData.onboarding.first() ?: true
+                appData.onboarding.firstOrNull() ?: true
             }
             val j2 = async {
                 api.getBeanfunAccounts().isSuccess
